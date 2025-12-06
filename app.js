@@ -549,16 +549,13 @@ function initSalaryCalculator() {
     $('#ssc_saveTemplateBtn').onclick=()=>{ const name=$('#ssc_newShiftName').value.trim(); const slices=[]; document.querySelectorAll('#ssc_newShiftSlices .ssc-editor-slice').forEach(div=>{ slices.push({p:+div.querySelector('.e-p').value, h:+div.querySelector('.e-h').value}); }); if(name && slices.length){ state.categories.push({id:'g'+Date.now(),name,slices}); saveData(); renderAll(); $('#ssc_newShiftName').value=''; $('#ssc_newShiftSlices').innerHTML=''; window.sscAddEditorSlice(); } };
 }
 
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.id === 'ssc_secretBtn') {
-                const input = document.getElementById('ssc_secretCode');
-                if (!input) return;
-                const val = input.value.trim();
-                if (val === 'משמר') { localStorage.setItem('ssc:mode', 'mishmar'); showAppAlert('מצב משמר', 'הפרופיל נטען בהצלחה! מרענן...', '👮‍♂️', function() { location.reload(); }); } 
-                else if (val === 'רגיל' || val === 'generic') { localStorage.setItem('ssc:mode', 'generic'); showAppAlert('מצב רגיל', 'חזרת למצב עריכה חופשי.', '✏️', function() { location.reload(); }); } 
-                else { showAppAlert('שגיאה', 'קוד לא חוקי', '❌'); }
-            }
-        });
-    </script>
-</body>
-</html>
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'ssc_secretBtn') {
+        const input = document.getElementById('ssc_secretCode');
+        if (!input) return;
+        const val = input.value.trim();
+        if (val === 'משמר') { localStorage.setItem('ssc:mode', 'mishmar'); showAppAlert('מצב משמר', 'הפרופיל נטען בהצלחה! מרענן...', '👮‍♂️', function() { location.reload(); }); } 
+        else if (val === 'רגיל' || val === 'generic') { localStorage.setItem('ssc:mode', 'generic'); showAppAlert('מצב רגיל', 'חזרת למצב עריכה חופשי.', '✏️', function() { location.reload(); }); } 
+        else { showAppAlert('שגיאה', 'קוד לא חוקי', '❌'); }
+    }
+});
