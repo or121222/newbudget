@@ -62,6 +62,7 @@
     <div id="side-menu" class="side-menu">
         <h2 style="color:var(--primary); padding:0 20px;" data-lang="menu_title">תפריט</h2>
         <div class="menu-item active" onclick="navTo('dashboard')"><i class="fas fa-home"></i> <span data-lang="menu_home">ראשי</span></div>
+        <div class="menu-item" onclick="navTo('timer')"><i class="fas fa-stopwatch"></i> <span data-lang="menu_timer">שעון נוכחות</span></div>
         <div class="menu-item" onclick="navTo('recurring')"><i class="fas fa-sync-alt"></i> <span data-lang="menu_recur">הוצאות קבועות</span></div>
         <div class="menu-item" onclick="navTo('converter')"><i class="fas fa-exchange-alt"></i> <span data-lang="menu_converter">ממיר מטבעות</span></div>
         <div class="menu-item" onclick="navTo('calc')"><i class="fas fa-calculator"></i> <span data-lang="menu_calc">מחשבון שכר</span></div>
@@ -76,13 +77,6 @@
         <div class="menu-item" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> <span data-lang="menu_dark">מצב לילה</span></div>
         <div class="menu-item" onclick="setupPinCode()"><i class="fas fa-lock"></i> <span data-lang="setup_pin">הגדרת קוד נעילה</span></div>
         <div class="menu-item" onclick="removePinCode()"><i class="fas fa-unlock"></i> <span data-lang="remove_pin">הסר קוד נעילה</span></div>
-        
-        <div class="menu-divider" style="height:1px;background:rgba(0,0,0,0.1);margin:5px 0;"></div>
-        
-        <div class="lang-toggle-container">
-            <button class="lang-mini-btn" onclick="setLanguage('he')" data-lang-btn="he">🇮🇱 עברית</button>
-            <button class="lang-mini-btn" onclick="setLanguage('en')" data-lang-btn="en">🇺🇸 English</button>
-        </div>
         
         <div class="menu-divider" style="height:1px;background:rgba(0,0,0,0.1);margin:5px 0;"></div>
         
@@ -116,30 +110,20 @@
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="search-bar" class="search-input" data-lang-placeholder="search_ph" placeholder="חיפוש..." oninput="renderApp()">
         </div>
-
-        <div class="filter-bar">
-            <select id="cat-filter" class="filter-select" onchange="renderApp()"><option value="all" data-lang="filter_all">כל הקטגוריות</option></select>
-        </div>
-
+        <div class="filter-bar"><select id="cat-filter" class="filter-select" onchange="renderApp()"><option value="all" data-lang="filter_all">כל הקטגוריות</option></select></div>
         <div id="categories-container"></div>
-        
         <div class="savings-container">
             <h3 style="margin-bottom:10px; color:var(--text-main)"><i class="fas fa-piggy-bank"></i> <span data-lang="savings_title">קופות חיסכון</span></h3>
             <div id="savings-list"></div>
             <button class="btn-primary" style="background:var(--success); margin-top:5px;" onclick="openGoalModal()" data-lang="new_goal_btn">+ יעד חדש</button>
         </div>
-
         <div class="chart-container-card">
             <div class="chart-wrapper">
                 <button class="chart-toggle" onclick="toggleChartType()"><i class="fas fa-exchange-alt"></i> <span data-lang="chart_toggle">החלף תצוגה</span></button>
-                <div style="position: relative; height: 100%; width: 100%;">
-                    <canvas id="expenseChart"></canvas>
-                </div>
+                <div style="position: relative; height: 100%; width: 100%;"><canvas id="expenseChart"></canvas></div>
             </div>
         </div>
-        <div style="text-align:center; font-size:12px; color:#888; margin-top: 20px; padding-bottom: 100px;" data-lang="footer_rights">
-            © All rights reserved for Neto App
-        </div>
+        <div style="text-align:center; font-size:12px; color:#888; margin-top: 20px; padding-bottom: 100px;" data-lang="footer_rights">© All rights reserved for Neto App</div>
         <div class="ad-spacer"></div>
         <button class="fab" onclick="openCategoryModal()"><i class="fas fa-plus"></i></button>
     </div>
@@ -149,17 +133,13 @@
             <div style="height:20px"></div>
             <h2 data-lang="menu_timer">שעון נוכחות</h2>
         </header>
-        
         <div class="timer-container">
             <div class="timer-circle" id="timer-circle">
                 <div class="timer-time" id="timer-time">00:00:00</div>
                 <div class="timer-label" data-lang="timer_earned">רווח מצטבר</div>
                 <div class="timer-money" id="timer-money">₪0.00</div>
             </div>
-            
-            <button class="timer-btn-lg btn-start" id="btn-shift-toggle" onclick="toggleShift()">
-                <i class="fas fa-play"></i>
-            </button>
+            <button class="timer-btn-lg btn-start" id="btn-shift-toggle" onclick="toggleShift()"><i class="fas fa-play"></i></button>
             <div id="timer-status-text" style="margin-top:15px; opacity:0.7; font-size:0.9rem;"></div>
         </div>
         <div class="ad-spacer"></div>
@@ -182,190 +162,69 @@
     </div>
 
     <div id="page-recurring" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="recur_title">הוצאות קבועות</h2>
-        </header>
-        
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="recur_title">הוצאות קבועות</h2></header>
         <div class="recur-add-box">
             <h3 style="margin-top:0; color:var(--primary); margin-bottom:15px;" data-lang="add_new">+ הוספה חדשה</h3>
-            
             <div class="rec-type-selector">
                 <label class="rec-type-label"><input type="radio" name="recType" id="type-fixed" value="fixed" checked onchange="toggleRecType()"><span data-lang="type_fixed">הוראת קבע</span></label>
                 <label class="rec-type-label"><input type="radio" name="recType" id="type-installments" value="installments" onchange="toggleRecType()"><span data-lang="type_installments">תשלומים</span></label>
             </div>
-
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="rec-desc" class="qa-input" style="flex:2; min-width:0;" data-lang-placeholder="recur_name_ph" placeholder="שם">
-                <input type="number" id="rec-amount" class="qa-input" style="flex:1; min-width:0;" data-lang-placeholder="amount_placeholder" placeholder="סכום">
-            </div>
-            
-            <div id="rec-payments-container" style="display:none; margin-top:10px;">
-                <input type="number" id="rec-payments" class="qa-input" style="width:100%;" data-lang-placeholder="num_payments" placeholder="מספר תשלומים">
-            </div>
-
+            <div style="display:flex; gap:5px;"><input type="text" id="rec-desc" class="qa-input" style="flex:2; min-width:0;" data-lang-placeholder="recur_name_ph" placeholder="שם"><input type="number" id="rec-amount" class="qa-input" style="flex:1; min-width:0;" data-lang-placeholder="amount_placeholder" placeholder="סכום"></div>
+            <div id="rec-payments-container" style="display:none; margin-top:10px;"><input type="number" id="rec-payments" class="qa-input" style="width:100%;" data-lang-placeholder="num_payments" placeholder="מספר תשלומים"></div>
             <select id="rec-cat-select" class="qa-input" style="width:100%; margin-top:10px; margin-bottom:10px;"></select>
             <button class="btn-primary" onclick="addRecurringSetting()" style="width: 50%; margin: 10px auto; display: block;" data-lang="save_order">שמור הוראה</button>
         </div>
-
-        <div class="ssc-panel" style="margin: 0 15px;">
-            <h3 style="margin-top:0; margin-bottom:10px; color:var(--text-main);" data-lang="active_orders">רשימת הוראות פעילות</h3>
-            <div style="overflow-x:auto;">
-                <table class="ssc-table" style="width:100%;">
-                    <thead><tr><th style="width:30%" data-lang="col_name">שם</th><th style="width:30%" data-lang="col_cat">קטגוריה</th><th style="text-align:center" data-lang="col_amount">סכום</th><th style="text-align:center" data-lang="col_del">מחק</th></tr></thead>
-                    <tbody id="recurring-list-container"></tbody>
-                </table>
-            </div>
-        </div>
+        <div class="ssc-panel" style="margin: 0 15px;"><h3 style="margin-top:0; margin-bottom:10px; color:var(--text-main);" data-lang="active_orders">רשימת הוראות פעילות</h3><div style="overflow-x:auto;"><table class="ssc-table" style="width:100%;"><thead><tr><th style="width:30%" data-lang="col_name">שם</th><th style="width:30%" data-lang="col_cat">קטגוריה</th><th style="text-align:center" data-lang="col_amount">סכום</th><th style="text-align:center" data-lang="col_del">מחק</th></tr></thead><tbody id="recurring-list-container"></tbody></table></div></div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-calc" class="page">
-        <header class="app-header" style="padding-bottom: 40px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;">
-            <div style="height:20px"></div>
-            <div class="ssc-header-container" style="margin: 0; color:white;">
-                <h2 style="margin:0; font-size:3rem; font-weight:700;" data-lang="calc_title">חישוב שכר</h2>
-                <div class="ssc-controls-row">
-                    <span id="ssc_modeBadge" class="ssc-glass-badge" data-lang="mode_free">מצב עריכה חופשי</span>
-                    <button class="ssc-glass-btn" onclick="sscResetMonth()"><i class="fas fa-sync-alt"></i> <span data-lang="reset">איפוס</span></button>
-                </div>
-            </div>
-        </header>
+        <header class="app-header" style="padding-bottom: 40px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;"><div style="height:20px"></div><div class="ssc-header-container" style="margin: 0; color:white;"><h2 style="margin:0; font-size:3rem; font-weight:700;" data-lang="calc_title">חישוב שכר</h2><div class="ssc-controls-row"><span id="ssc_modeBadge" class="ssc-glass-badge" data-lang="mode_free">מצב עריכה חופשי</span><button class="ssc-glass-btn" onclick="sscResetMonth()"><i class="fas fa-sync-alt"></i> <span data-lang="reset">איפוס</span></button></div></div></header>
         <div class="ssc-wrap" style="margin-top: -20px;">
-            <section class="ssc-panel">
-                <div class="ssc-row"><label style="flex:1"><small data-lang="hourly_wage">שכר לשעה</small><input id="ssc_hourly" type="number" step="0.1" placeholder="0" class="ssc-inp"></label><label style="flex:1"><small data-lang="month">חודש</small><input id="ssc_month" type="month" class="ssc-inp"></label></div>
-            </section>
-            <section class="ssc-panel" id="ssc_editorPanel">
-                <h3 style="margin-top:0;color:var(--primary)" data-lang="add_shift_title">הוספת סוג משמרת</h3>
-                <input type="text" id="ssc_newShiftName" data-lang-placeholder="shift_name_ph" placeholder="שם" class="ssc-inp" style="margin-bottom:10px;">
-                <div id="ssc_newShiftSlices"></div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px;"><button class="ssc-btn ghost" onclick="sscAddEditorSlice()" style="font-size:12px;" data-lang="add_step">+ הוסף מדרגה</button><button class="ssc-btn acc" id="ssc_saveTemplateBtn" data-lang="save_type">שמור סוג</button></div>
-            </section>
-            <section class="ssc-panel" style="background:transparent; border:none; padding:0; box-shadow:none;">
-                <div class="ssc-grid" id="ssc_grid"></div>
-                <div id="ssc_emptyState" style="text-align:center;padding:40px;color:#999;font-size:14px; background:rgba(255,255,255,0.5); border-radius:16px;" data-lang="no_shifts">אין משמרות מוגדרות</div>
-            </section>
-            <div class="ssc-summary" style="margin-top:20px">
-                <div><div class="ssc-meta" data-lang="stat_shifts">משמרות</div><div class="ssc-total" id="ssc_totalShifts">0</div></div>
-                <div><div class="ssc-meta" data-lang="stat_hours">שעות</div><div class="ssc-total" id="ssc_totalHours">0</div></div>
-                <div><div class="ssc-meta" data-lang="stat_wage">שכר</div><div class="ssc-total" id="ssc_grandTotal" style="color:var(--success)">₪0</div></div>
-            </div>
-            <div class="ssc-panel" style="margin-top:16px">
-                <div style="font-weight:700;margin-bottom:12px; color:var(--text-main);" data-lang="free_calc_title">מחשבון חופשי (תוספות)</div>
-                <div style="display:flex; gap:10px; margin-bottom:5px; font-size:0.8rem; color:var(--text-sec); padding:0 5px;"><span style="flex:2" data-lang="col_desc">תיאור</span><span style="flex:1; text-align:center" data-lang="col_hours">שעות</span><span style="flex:1; text-align:center" data-lang="col_percent">אחוז %</span><span style="width:30px"></span></div>
-                <div id="ssc_quickRows"></div>
-                <div class="ssc-row" style="margin-top:12px"><button class="ssc-btn acc" onclick="sscAddQuickRow()" style="font-size:12px; width:100%;" data-lang="add_row">+ הוסף שורה</button></div>
-                <div style="text-align:left; margin-top:10px; font-weight:bold; color:var(--text-sec);"><span data-lang="total_additions">סה״כ תוספות:</span> <span id="ssc_quickSum">0</span></div>
-            </div>
-            <section class="ssc-panel">
-                <h3 style="margin-bottom:10px; color:var(--text-main);" data-lang="full_details">פירוט מלא</h3>
-                <div style="overflow-x:auto"><table class="ssc-table"><thead><tr><th data-lang="col_type">סוג</th><th data-lang="col_qty">כמות</th><th data-lang="col_hours">שעות</th><th data-lang="col_total">סה״כ</th></tr></thead><tbody id="ssc_details"></tbody><tfoot><tr><td colspan="3" data-lang="grand_total">סה״כ כולל</td><td id="ssc_detailsTotal">0</td></tr></tfoot></table></div>
-            </section>
-            
-            <div style="display:flex; justify-content:center; gap:5px; margin-top:20px; opacity:0.3;">
-                <input type="text" id="ssc_secretCode" class="ssc-inp" placeholder="קוד..." style="width:100px; text-align:center; padding:8px;">
-                <button class="ssc-btn" id="ssc_secretBtn" style="background:#999; color:white;">OK</button>
-            </div>
+            <section class="ssc-panel"><div class="ssc-row"><label style="flex:1"><small data-lang="hourly_wage">שכר לשעה</small><input id="ssc_hourly" type="number" step="0.1" placeholder="0" class="ssc-inp"></label><label style="flex:1"><small data-lang="month">חודש</small><input id="ssc_month" type="month" class="ssc-inp"></label></div></section>
+            <section class="ssc-panel" id="ssc_editorPanel"><h3 style="margin-top:0;color:var(--primary)" data-lang="add_shift_title">הוספת סוג משמרת</h3><input type="text" id="ssc_newShiftName" data-lang-placeholder="shift_name_ph" placeholder="שם" class="ssc-inp" style="margin-bottom:10px;"><div id="ssc_newShiftSlices"></div><div style="display:flex; justify-content:space-between; margin-top:10px;"><button class="ssc-btn ghost" onclick="sscAddEditorSlice()" style="font-size:12px;" data-lang="add_step">+ הוסף מדרגה</button><button class="ssc-btn acc" id="ssc_saveTemplateBtn" data-lang="save_type">שמור סוג</button></div></section>
+            <section class="ssc-panel" style="background:transparent; border:none; padding:0; box-shadow:none;"><div class="ssc-grid" id="ssc_grid"></div><div id="ssc_emptyState" style="text-align:center;padding:40px;color:#999;font-size:14px; background:rgba(255,255,255,0.5); border-radius:16px;" data-lang="no_shifts">אין משמרות מוגדרות</div></section>
+            <div class="ssc-summary" style="margin-top:20px"><div><div class="ssc-meta" data-lang="stat_shifts">משמרות</div><div class="ssc-total" id="ssc_totalShifts">0</div></div><div><div class="ssc-meta" data-lang="stat_hours">שעות</div><div class="ssc-total" id="ssc_totalHours">0</div></div><div><div class="ssc-meta" data-lang="stat_wage">שכר</div><div class="ssc-total" id="ssc_grandTotal" style="color:var(--success)">₪0</div></div></div>
+            <div class="ssc-panel" style="margin-top:16px"><div style="font-weight:700;margin-bottom:12px; color:var(--text-main);" data-lang="free_calc_title">מחשבון חופשי (תוספות)</div><div style="display:flex; gap:10px; margin-bottom:5px; font-size:0.8rem; color:var(--text-sec); padding:0 5px;"><span style="flex:2" data-lang="col_desc">תיאור</span><span style="flex:1; text-align:center" data-lang="col_hours">שעות</span><span style="flex:1; text-align:center" data-lang="col_percent">אחוז %</span><span style="width:30px"></span></div><div id="ssc_quickRows"></div><div class="ssc-row" style="margin-top:12px"><button class="ssc-btn acc" onclick="sscAddQuickRow()" style="font-size:12px; width:100%;" data-lang="add_row">+ הוסף שורה</button></div><div style="text-align:left; margin-top:10px; font-weight:bold; color:var(--text-sec);"><span data-lang="total_additions">סה״כ תוספות:</span> <span id="ssc_quickSum">0</span></div></div>
+            <section class="ssc-panel"><h3 style="margin-bottom:10px; color:var(--text-main);" data-lang="full_details">פירוט מלא</h3><div style="overflow-x:auto"><table class="ssc-table"><thead><tr><th data-lang="col_type">סוג</th><th data-lang="col_qty">כמות</th><th data-lang="col_hours">שעות</th><th data-lang="col_total">סה״כ</th></tr></thead><tbody id="ssc_details"></tbody><tfoot><tr><td colspan="3" data-lang="grand_total">סה״כ כולל</td><td id="ssc_detailsTotal">0</td></tr></tfoot></table></div></section>
+            <div style="display:flex; justify-content:center; gap:5px; margin-top:20px; opacity:0.3;"><input type="text" id="ssc_secretCode" class="ssc-inp" placeholder="קוד..." style="width:100px; text-align:center; padding:8px;"><button class="ssc-btn" id="ssc_secretBtn" style="background:#999; color:white;">OK</button></div>
         </div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-loan" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="menu_loan">מחשבון הלוואה</h2>
-        </header>
-        <div class="tool-card">
-            <div class="tool-row"><label class="tool-label" data-lang="loan_amount">סכום ההלוואה</label><input type="number" id="loan-amount" class="tool-input"></div>
-            <div class="tool-row"><label class="tool-label" data-lang="loan_interest">ריבית שנתית (%)</label><input type="number" id="loan-rate" class="tool-input"></div>
-            <div class="tool-row"><label class="tool-label" data-lang="loan_years">תקופה (שנים)</label><input type="number" id="loan-years" class="tool-input"></div>
-            <button class="btn-primary" onclick="calcLoan()" data-lang="calculate">חשב</button>
-            <div class="tool-result"><div style="font-size:0.9rem;" data-lang="monthly_payment">החזר חודשי</div><div class="tool-res-val" id="loan-result">---</div></div>
-        </div>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="menu_loan">מחשבון הלוואה</h2></header>
+        <div class="tool-card"><div class="tool-row"><label class="tool-label" data-lang="loan_amount">סכום ההלוואה</label><input type="number" id="loan-amount" class="tool-input"></div><div class="tool-row"><label class="tool-label" data-lang="loan_interest">ריבית שנתית (%)</label><input type="number" id="loan-rate" class="tool-input"></div><div class="tool-row"><label class="tool-label" data-lang="loan_years">תקופה (שנים)</label><input type="number" id="loan-years" class="tool-input"></div><button class="btn-primary" onclick="calcLoan()" data-lang="calculate">חשב</button><div class="tool-result"><div style="font-size:0.9rem;" data-lang="monthly_payment">החזר חודשי</div><div class="tool-res-val" id="loan-result">---</div></div></div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-split" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="menu_split">פיצול חשבון</h2>
-        </header>
-        <div class="tool-card">
-            <div class="tool-row"><label class="tool-label" data-lang="bill_amount">סכום החשבון</label><input type="number" id="split-amount" class="tool-input"></div>
-            <div class="tool-row"><label class="tool-label" data-lang="tip_percent">טיפ (%)</label><input type="number" id="split-tip" class="tool-input" value="10"></div>
-            <div class="tool-row"><label class="tool-label" data-lang="num_people">מספר אנשים</label><input type="number" id="split-people" class="tool-input" value="2"></div>
-            <button class="btn-primary" onclick="calcSplit()" data-lang="calculate">חשב</button>
-            <div class="tool-result"><div style="font-size:0.9rem;" data-lang="total_per_person">סה״כ לאדם</div><div class="tool-res-val" id="split-result">---</div></div>
-        </div>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="menu_split">פיצול חשבון</h2></header>
+        <div class="tool-card"><div class="tool-row"><label class="tool-label" data-lang="bill_amount">סכום החשבון</label><input type="number" id="split-amount" class="tool-input"></div><div class="tool-row"><label class="tool-label" data-lang="tip_percent">טיפ (%)</label><input type="number" id="split-tip" class="tool-input" value="10"></div><div class="tool-row"><label class="tool-label" data-lang="num_people">מספר אנשים</label><input type="number" id="split-people" class="tool-input" value="2"></div><button class="btn-primary" onclick="calcSplit()" data-lang="calculate">חשב</button><div class="tool-result"><div style="font-size:0.9rem;" data-lang="total_per_person">סה״כ לאדם</div><div class="tool-res-val" id="split-result">---</div></div></div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-wishlist" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="menu_wishlist">רשימת משאלות</h2>
-            <div class="motivation-box" style="margin-top: 15px;">
-                <i class="fas fa-star" style="margin-left:5px; opacity:0.8"></i>
-                <span class="motivation-text" style="font-weight:bold;" data-lang="wishlist_tip">לפני שקונים - חושבים פעמיים! 💭</span> 
-            </div>
-        </header>
-        <div class="recur-add-box">
-            <h3 style="margin-top:0; color:var(--primary); margin-bottom:15px;" data-lang="add_new">+ הוספה חדשה</h3>
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="wish-name" class="qa-input" style="flex:2; min-width:0;" data-lang-placeholder="item_name" placeholder="שם מוצר">
-                <input type="number" id="wish-price" class="qa-input" style="flex:1; min-width:0;" data-lang-placeholder="item_price" placeholder="מחיר">
-            </div>
-            <button class="btn-primary" onclick="addWishlistItem()" style="width: 50%; margin: 10px auto; display: block;" data-lang="add">הוסף</button>
-        </div>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="menu_wishlist">רשימת משאלות</h2><div class="motivation-box" style="margin-top: 15px;"><i class="fas fa-star" style="margin-left:5px; opacity:0.8"></i><span class="motivation-text" style="font-weight:bold;" data-lang="wishlist_tip">לפני שקונים - חושבים פעמיים! 💭</span></div></header>
+        <div class="recur-add-box"><h3 style="margin-top:0; color:var(--primary); margin-bottom:15px;" data-lang="add_new">+ הוספה חדשה</h3><div style="display:flex; gap:5px;"><input type="text" id="wish-name" class="qa-input" style="flex:2; min-width:0;" data-lang-placeholder="item_name" placeholder="שם מוצר"><input type="number" id="wish-price" class="qa-input" style="flex:1; min-width:0;" data-lang-placeholder="item_price" placeholder="מחיר"></div><button class="btn-primary" onclick="addWishlistItem()" style="width: 50%; margin: 10px auto; display: block;" data-lang="add">הוסף</button></div>
         <div style="padding: 0 15px;" id="wishlist-container"></div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-premium" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="premium_title">Premium</h2>
-        </header>
-        <div id="premium-content" style="padding: 20px; text-align: center;">
-            <div style="background: linear-gradient(135deg, #FFD700, #FDB931); padding:30px; border-radius:20px; color:#333; box-shadow:0 10px 20px rgba(0,0,0,0.1);">
-                <h1><i class="fas fa-crown"></i></h1>
-                <h2 data-lang="upgrade_pro">שדרוג לפרו</h2>
-                <p data-lang="pro_desc">הסרת פרסומות, גיבוי בענן ותמיכה.</p>
-                <button class="btn-primary" style="background:#bdc3c7; margin-top:20px; cursor:not-allowed;" disabled data-lang="coming_soon">בקרוב</button>
-            </div>
-        </div>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="premium_title">Premium</h2></header>
+        <div id="premium-content" style="padding: 20px; text-align: center;"><div style="background: linear-gradient(135deg, #FFD700, #FDB931); padding:30px; border-radius:20px; color:#333; box-shadow:0 10px 20px rgba(0,0,0,0.1);"><h1><i class="fas fa-crown"></i></h1><h2 data-lang="upgrade_pro">שדרוג לפרו</h2><p data-lang="pro_desc">הסרת פרסומות, גיבוי בענן ותמיכה.</p><button class="btn-primary" style="background:#bdc3c7; margin-top:20px; cursor:not-allowed;" disabled data-lang="coming_soon">בקרוב</button></div></div>
     </div>
 
     <div id="settings-modal" class="modal-overlay">
         <div class="modal-card">
             <h3 data-lang="settings_title">הגדרות וגיבוי</h3>
-            
             <div style="text-align:start; margin-bottom:5px; font-size:0.9rem; font-weight:bold; color:var(--text-sec);">ערכת נושא</div>
-            <div class="theme-grid">
-                <div class="theme-btn" style="background:#4e54c8" onclick="applyTheme('default')">סגול</div>
-                <div class="theme-btn" style="background:#006994" onclick="applyTheme('ocean')">ים</div>
-                <div class="theme-btn" style="background:#2d6a4f" onclick="applyTheme('forest')">יער</div>
-                <div class="theme-btn" style="background:#f77f00" onclick="applyTheme('sunset')">שקיעה</div>
-            </div>
-
+            <div class="theme-grid"><div class="theme-btn" style="background:#4e54c8" onclick="applyTheme('default')">סגול</div><div class="theme-btn" style="background:#006994" onclick="applyTheme('ocean')">ים</div><div class="theme-btn" style="background:#2d6a4f" onclick="applyTheme('forest')">יער</div><div class="theme-btn" style="background:#f77f00" onclick="applyTheme('sunset')">שקיעה</div></div>
             <div style="margin-top:15px; margin-bottom:5px; font-weight:bold; font-size:0.9rem; color:var(--text-sec);">תאריך תחילת חודש (מחזור חיוב)</div>
-            <div class="switch-container" style="flex-direction:column; align-items:stretch; gap:10px;">
-                <div style="display:flex; justify-content:space-between;">
-                     <span>יום בחודש: <span id="bill-day-val" style="font-weight:bold; color:var(--primary);">1</span></span>
-                </div>
-                <input type="range" id="billing-day-slider" min="1" max="31" value="1" style="width:100%" oninput="updateBillingDayVal()" onchange="saveBillingDay()">
-            </div>
-
-            <div class="switch-container">
-                <span class="switch-label">רטט במגע</span>
-                <label class="switch-toggle">
-                    <input type="checkbox" id="haptic-toggle" onchange="toggleHaptic()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-
+            <div class="switch-container" style="flex-direction:column; align-items:stretch; gap:10px;"><div style="display:flex; justify-content:space-between;"><span>יום בחודש: <span id="bill-day-val" style="font-weight:bold; color:var(--primary);">1</span></span></div><input type="range" id="billing-day-slider" min="1" max="31" value="1" style="width:100%" oninput="updateBillingDayVal()" onchange="saveBillingDay()"></div>
+            <div class="switch-container"><span class="switch-label">רטט במגע</span><label class="switch-toggle"><input type="checkbox" id="haptic-toggle" onchange="toggleHaptic()"><span class="slider"></span></label></div>
             <hr style="margin: 15px 0; border:0; border-top:1px solid rgba(0,0,0,0.1);">
-
             <button class="btn-primary" onclick="exportDataJSON()" style="margin-bottom:10px; background:var(--primary)"><i class="fas fa-share-alt"></i> <span data-lang="backup_btn">גיבוי מלא (שתף)</span></button>
             <label class="btn-primary" style="background:var(--secondary); display:block; cursor:pointer; margin-bottom:10px"><i class="fas fa-file-import"></i> <span data-lang="restore_btn">שחזור מגיבוי</span><input type="file" onchange="importDataJSON(this)" style="display:none"></label>
             <button class="btn-primary" onclick="exportToCSV()" style="margin-bottom:10px; background:var(--success)"><i class="fas fa-file-csv"></i> <span data-lang="export_btn">ייצוא לאקסל (שתף)</span></button>
@@ -373,142 +232,18 @@
         </div>
     </div>
     
-    <div id="delete-category-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center;">
-            <i class="fas fa-exclamation-triangle" style="font-size:3rem; color:var(--danger); margin-bottom:15px;"></i>
-            <h3 style="margin-bottom:10px;" data-lang="delete_cat_title">למחוק את הקטגוריה?</h3>
-            <p style="margin-bottom:20px; color:#666; font-size:0.95rem;" data-lang="delete_cat_msg">הקטגוריה וכל ההוצאות יימחקו.\nלא ניתן לשחזר!</p>
-            <input type="hidden" id="delete-cat-target-id">
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 25px;" onclick="closeDeleteCatModal()" data-lang="cancel">ביטול</button>
-                <button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 25px;" onclick="performCategoryDelete()" data-lang="yes_delete">כן, מחק</button>
-            </div>
-        </div>
-    </div>
+    <div id="delete-category-modal" class="modal-overlay"><div class="modal-card" style="text-align:center;"><i class="fas fa-exclamation-triangle" style="font-size:3rem; color:var(--danger); margin-bottom:15px;"></i><h3 style="margin-bottom:10px;" data-lang="delete_cat_title">למחוק את הקטגוריה?</h3><p style="margin-bottom:20px; color:#666; font-size:0.95rem;" data-lang="delete_cat_msg">הקטגוריה וכל ההוצאות יימחקו.\nלא ניתן לשחזר!</p><input type="hidden" id="delete-cat-target-id"><div style="display:flex; gap:10px; justify-content:center;"><button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 25px;" onclick="closeDeleteCatModal()" data-lang="cancel">ביטול</button><button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 25px;" onclick="performCategoryDelete()" data-lang="yes_delete">כן, מחק</button></div></div></div>
+    <div id="goal-modal" class="modal-overlay"><div class="modal-card"><h3 data-lang="new_goal_title">יעד חיסכון חדש</h3><div style="display:flex; gap:10px; margin-bottom:15px;"><input type="text" id="new-goal-emoji" class="qa-input" style="width:60px; text-align:center;" value="✈️" data-lang-placeholder="icon_ph" placeholder="סמל"><input type="text" id="new-goal-name" class="qa-input" style="flex:1;" data-lang-placeholder="goal_name_ph" placeholder="שם היעד"></div><input type="number" id="new-goal-target" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="goal_target_ph" placeholder="סכום יעד"><label style="display:block; margin-bottom:8px; font-size:0.9rem;" data-lang="choose_color">בחר צבע:</label><div class="color-picker-row" style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;"><div class="color-opt selected" onclick="selectGoalColor(this, 'linear-gradient(135deg, #a8e063, #56ab2f)')" style="background: linear-gradient(135deg, #a8e063, #56ab2f);"></div><div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #ff9966, #ff5e62)')" style="background: linear-gradient(135deg, #ff9966, #ff5e62);"></div><div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #56CCF2, #2F80ED)')" style="background: linear-gradient(135deg, #56CCF2, #2F80ED);"></div><div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #834d9b, #d04ed6)')" style="background: linear-gradient(135deg, #834d9b, #d04ed6);"></div></div><input type="hidden" id="new-goal-color" value="linear-gradient(135deg, #a8e063, #56ab2f)"><div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('goal-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmAddGoal()" data-lang="save">שמור</button></div></div></div>
+    <div id="deposit-modal" class="modal-overlay"><div class="modal-card"><h3 data-lang="deposit_title">הפקדה ליעד</h3><p id="deposit-goal-name" style="margin-bottom:15px; opacity:0.7;">...</p><input type="number" id="deposit-amount" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="deposit_amount_ph" placeholder="סכום להפקדה"><input type="hidden" id="deposit-goal-index"><div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('deposit-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmDeposit()" data-lang="deposit_btn">הפקד</button></div></div></div>
+    <div id="delete-confirm-modal" class="modal-overlay"><div class="modal-card" style="text-align:center;"><i class="fas fa-exclamation-circle" style="font-size:3rem; color:var(--danger); margin-bottom:10px;"></i><h3 data-lang="delete_goal_title">למחוק את היעד?</h3><p style="margin-bottom:20px; color:#666;" data-lang="delete_goal_msg">פעולה זו לא ניתנת לביטול.</p><input type="hidden" id="delete-goal-index"><div style="display:flex; gap:10px; justify-content:center;"><button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 20px;" onclick="document.getElementById('delete-confirm-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 20px;" onclick="confirmDeleteGoal()" data-lang="yes_delete">מחק</button></div></div></div>
+    <div id="delete-shift-modal" class="modal-overlay"><div class="modal-card" style="text-align:center;"><i class="fas fa-trash-alt" style="font-size:3rem; color:var(--danger); margin-bottom:10px;"></i><h3 data-lang="delete_shift_title">למחוק סוג משמרת?</h3><p style="margin-bottom:20px; color:#666;" data-lang="delete_shift_msg">הנתונים של משמרת זו יימחקו.</p><input type="hidden" id="delete-shift-id"><div style="display:flex; gap:10px; justify-content:center;"><button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 20px;" onclick="document.getElementById('delete-shift-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 20px;" onclick="performDeleteShift()" data-lang="yes_delete">מחק</button></div></div></div>
+    <div id="reset-confirm-modal" class="modal-overlay"><div class="modal-card" style="text-align:center;"><i class="fas fa-trash-restore" style="font-size:3rem; color:#ff9800; margin-bottom:15px;"></i><h3 data-lang="reset_month_title">לאפס את החודש?</h3><p style="color:#666; margin-bottom:20px;" data-lang="reset_month_msg">כל המשמרות יימחקו.</p><div style="display:flex; gap:10px; justify-content:center;"><button class="ssc-btn ghost" onclick="document.getElementById('reset-confirm-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="ssc-btn danger" onclick="performRealReset()" data-lang="yes_reset">כן, אפס</button></div></div></div>
+    <div id="custom-alert-modal" class="modal-overlay"><div class="modal-card" style="text-align:center; padding:30px;"><div id="alert-icon" style="font-size:3rem; margin-bottom:15px;">✅</div><h3 id="alert-title" style="margin-bottom:10px;" data-lang="alert_title">הודעה</h3><p id="alert-message" style="margin-bottom:25px; color:#666; font-size:1.1rem;">...</p><button class="btn-primary" onclick="closeCustomAlert()" data-lang="confirm">אישור</button></div></div>
+    <div id="general-confirm-modal" class="modal-overlay"><div class="modal-card" style="text-align:center;"><i class="fas fa-question-circle" style="font-size:3rem; color:var(--primary); margin-bottom:10px;"></i><h3 id="gen-confirm-title" style="margin-bottom:10px;">?</h3><p id="gen-confirm-msg" style="margin-bottom:20px; color:#666;">?</p><div style="display:flex; gap:10px; justify-content:center;"><button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 25px;" onclick="closeGeneralConfirm()">ביטול</button><button class="btn-primary" style="background:var(--primary); width:auto; padding:10px 25px;" onclick="performGeneralConfirm()">אישור</button></div></div></div>
+    <div id="cat-modal" class="modal-overlay"><div class="modal-card"><h3 data-lang="new_cat_title">קטגוריה חדשה</h3><input type="text" id="new-cat-name" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="cat_name_ph" placeholder="שם"><div style="margin-bottom:15px; text-align:right"><label style="font-size:0.8rem; color:#666" data-lang="icon_label">סמל:</label><div class="emoji-grid"><span class="emoji-opt" onclick="selectEmoji('🍕')">🍕</span><span class="emoji-opt" onclick="selectEmoji('🚗')">🚗</span><span class="emoji-opt" onclick="selectEmoji('🏠')">🏠</span><span class="emoji-opt" onclick="selectEmoji('👕')">👕</span></div><input type="text" id="new-cat-emoji" class="qa-input" style="width:100%" data-lang-placeholder="icon_ph" placeholder="או הקלד..." value="📁"></div><input type="number" id="new-cat-limit" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="cat_limit_ph" placeholder="תקציב"><div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="closeCategoryModal()" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmAddCategory()" data-lang="add">הוסף</button></div></div></div>
+    <div id="limit-modal" class="modal-overlay"><div class="modal-card"><h3 data-lang="edit_budget_title">עדכון תקציב</h3><p id="limit-modal-cat-name" style="margin-bottom:10px"></p><input type="number" id="edit-cat-limit" class="qa-input" style="width:100%; margin-bottom:15px"><input type="hidden" id="edit-cat-id"><div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('limit-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmEditLimit()" data-lang="update">עדכן</button></div></div></div>
+    <div id="buy-item-modal" class="modal-overlay"><div class="modal-card"><h3>בחר קטגוריה לחיוב</h3><input type="hidden" id="buy-item-index"><select id="buy-cat-select" class="qa-input" style="width:100%; margin-bottom:15px;"></select><div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('buy-item-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmBuyItem()" data-lang="confirm">בצע רכישה</button></div></div></div>
 
-    <div id="goal-modal" class="modal-overlay">
-        <div class="modal-card">
-            <h3 data-lang="new_goal_title">יעד חיסכון חדש</h3>
-            <div style="display:flex; gap:10px; margin-bottom:15px;">
-                <input type="text" id="new-goal-emoji" class="qa-input" style="width:60px; text-align:center;" value="✈️" data-lang-placeholder="icon_ph" placeholder="סמל">
-                <input type="text" id="new-goal-name" class="qa-input" style="flex:1;" data-lang-placeholder="goal_name_ph" placeholder="שם היעד">
-            </div>
-            <input type="number" id="new-goal-target" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="goal_target_ph" placeholder="סכום יעד">
-            <label style="display:block; margin-bottom:8px; font-size:0.9rem;" data-lang="choose_color">בחר צבע:</label>
-            <div class="color-picker-row" style="display:flex; gap:10px; justify-content:center; margin-bottom:20px;">
-                <div class="color-opt selected" onclick="selectGoalColor(this, 'linear-gradient(135deg, #a8e063, #56ab2f)')" style="background: linear-gradient(135deg, #a8e063, #56ab2f);"></div>
-                <div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #ff9966, #ff5e62)')" style="background: linear-gradient(135deg, #ff9966, #ff5e62);"></div>
-                <div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #56CCF2, #2F80ED)')" style="background: linear-gradient(135deg, #56CCF2, #2F80ED);"></div>
-                <div class="color-opt" onclick="selectGoalColor(this, 'linear-gradient(135deg, #834d9b, #d04ed6)')" style="background: linear-gradient(135deg, #834d9b, #d04ed6);"></div>
-            </div>
-            <input type="hidden" id="new-goal-color" value="linear-gradient(135deg, #a8e063, #56ab2f)">
-            <div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('goal-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmAddGoal()" data-lang="save">שמור</button></div>
-        </div>
-    </div>
-
-    <div id="deposit-modal" class="modal-overlay">
-        <div class="modal-card">
-            <h3 data-lang="deposit_title">הפקדה ליעד</h3>
-            <p id="deposit-goal-name" style="margin-bottom:15px; opacity:0.7;">...</p>
-            <input type="number" id="deposit-amount" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="deposit_amount_ph" placeholder="סכום להפקדה">
-            <input type="hidden" id="deposit-goal-index">
-            <div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('deposit-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmDeposit()" data-lang="deposit_btn">הפקד</button></div>
-        </div>
-    </div>
-
-    <div id="delete-confirm-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center;">
-            <i class="fas fa-exclamation-circle" style="font-size:3rem; color:var(--danger); margin-bottom:10px;"></i>
-            <h3 data-lang="delete_goal_title">למחוק את היעד?</h3>
-            <p style="margin-bottom:20px; color:#666;" data-lang="delete_goal_msg">פעולה זו לא ניתנת לביטול.</p>
-            <input type="hidden" id="delete-goal-index">
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 20px;" onclick="document.getElementById('delete-confirm-modal').classList.remove('open')" data-lang="cancel">ביטול</button>
-                <button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 20px;" onclick="confirmDeleteGoal()" data-lang="yes_delete">מחק</button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="delete-shift-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center;">
-            <i class="fas fa-trash-alt" style="font-size:3rem; color:var(--danger); margin-bottom:10px;"></i>
-            <h3 data-lang="delete_shift_title">למחוק סוג משמרת?</h3>
-            <p style="margin-bottom:20px; color:#666;" data-lang="delete_shift_msg">הנתונים של משמרת זו יימחקו.</p>
-            <input type="hidden" id="delete-shift-id">
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 20px;" onclick="document.getElementById('delete-shift-modal').classList.remove('open')" data-lang="cancel">ביטול</button>
-                <button class="btn-primary" style="background:var(--danger); width:auto; padding:10px 20px;" onclick="performDeleteShift()" data-lang="yes_delete">מחק</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="reset-confirm-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center;">
-            <i class="fas fa-trash-restore" style="font-size:3rem; color:#ff9800; margin-bottom:15px;"></i>
-            <h3 data-lang="reset_month_title">לאפס את החודש?</h3>
-            <p style="color:#666; margin-bottom:20px;" data-lang="reset_month_msg">כל המשמרות יימחקו.</p>
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="ssc-btn ghost" onclick="document.getElementById('reset-confirm-modal').classList.remove('open')" data-lang="cancel">ביטול</button>
-                <button class="ssc-btn danger" onclick="performRealReset()" data-lang="yes_reset">כן, אפס</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="custom-alert-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center; padding:30px;">
-            <div id="alert-icon" style="font-size:3rem; margin-bottom:15px;">✅</div>
-            <h3 id="alert-title" style="margin-bottom:10px;" data-lang="alert_title">הודעה</h3>
-            <p id="alert-message" style="margin-bottom:25px; color:#666; font-size:1.1rem;">...</p>
-            <button class="btn-primary" onclick="closeCustomAlert()" data-lang="confirm">אישור</button>
-        </div>
-    </div>
-
-    <div id="general-confirm-modal" class="modal-overlay">
-        <div class="modal-card" style="text-align:center;">
-            <i class="fas fa-question-circle" style="font-size:3rem; color:var(--primary); margin-bottom:10px;"></i>
-            <h3 id="gen-confirm-title" style="margin-bottom:10px;">?</h3>
-            <p id="gen-confirm-msg" style="margin-bottom:20px; color:#666;">?</p>
-            
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button class="btn-primary" style="background:#ccc; color:#333; width:auto; padding:10px 25px;" onclick="closeGeneralConfirm()">ביטול</button>
-                <button class="btn-primary" style="background:var(--primary); width:auto; padding:10px 25px;" onclick="performGeneralConfirm()">אישור</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="cat-modal" class="modal-overlay">
-        <div class="modal-card">
-            <h3 data-lang="new_cat_title">קטגוריה חדשה</h3>
-            <input type="text" id="new-cat-name" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="cat_name_ph" placeholder="שם">
-            <div style="margin-bottom:15px; text-align:right">
-                <label style="font-size:0.8rem; color:#666" data-lang="icon_label">סמל:</label>
-                <div class="emoji-grid"><span class="emoji-opt" onclick="selectEmoji('🍕')">🍕</span><span class="emoji-opt" onclick="selectEmoji('🚗')">🚗</span><span class="emoji-opt" onclick="selectEmoji('🏠')">🏠</span><span class="emoji-opt" onclick="selectEmoji('👕')">👕</span></div>
-                <input type="text" id="new-cat-emoji" class="qa-input" style="width:100%" data-lang-placeholder="icon_ph" placeholder="או הקלד..." value="📁">
-            </div>
-            <input type="number" id="new-cat-limit" class="qa-input" style="width:100%; margin-bottom:15px" data-lang-placeholder="cat_limit_ph" placeholder="תקציב">
-            <div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="closeCategoryModal()" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmAddCategory()" data-lang="add">הוסף</button></div>
-        </div>
-    </div>
-
-    <div id="limit-modal" class="modal-overlay">
-        <div class="modal-card">
-            <h3 data-lang="edit_budget_title">עדכון תקציב</h3>
-            <p id="limit-modal-cat-name" style="margin-bottom:10px"></p>
-            <input type="number" id="edit-cat-limit" class="qa-input" style="width:100%; margin-bottom:15px">
-            <input type="hidden" id="edit-cat-id">
-            <div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('limit-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmEditLimit()" data-lang="update">עדכן</button></div>
-        </div>
-    </div>
-
-    <div id="buy-item-modal" class="modal-overlay">
-        <div class="modal-card">
-            <h3>בחר קטגוריה לחיוב</h3>
-            <input type="hidden" id="buy-item-index">
-            <select id="buy-cat-select" class="qa-input" style="width:100%; margin-bottom:15px;"></select>
-            <div style="display:flex; gap:10px;"><button class="btn-primary" style="background:#ccc; color:#333" onclick="document.getElementById('buy-item-modal').classList.remove('open')" data-lang="cancel">ביטול</button><button class="btn-primary" onclick="confirmBuyItem()" data-lang="confirm">בצע רכישה</button></div>
-        </div>
-    </div>
-
-    <script src="app.js" defer></script>
+    <script src="app.js"></script>
 </body>
 </html>
