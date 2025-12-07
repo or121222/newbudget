@@ -51,7 +51,7 @@ try {
    ========================================= */
 const translations = {
     he: {
-        dir: 'rtl', locale: 'he-IL', remove_pin: "הסר קוד נעילה",
+        dir: 'rtl', locale: 'he-IL', remove_pin: "הסר קוד נעילה", menu_logout: "יציאה",
         app_title: "Neto", subtitle: "ניהול תקציב חכם ופשוט", daily_tip: "טיפ יומי", start_btn: "בואו נתחיל",
         menu_title: "תפריט", menu_home: "ראשי", menu_timer: "שעון נוכחות", menu_converter: "ממיר מטבעות", menu_recur: "הוצאות קבועות", menu_calc: "מחשבון שכר", menu_loan: "מחשבון הלוואה", menu_split: "פיצול חשבון", menu_wishlist: "רשימת משאלות", menu_pro: "פרימיום", menu_backup: "גיבוי ושחזור", menu_dark: "מצב לילה", setup_pin: "הגדרת קוד נעילה",
         balance_label: "עו\"ש בבנק", salary_label: "משכורת", filter_all: "כל הקטגוריות", search_ph: "חיפוש הוצאות...", left_to_spend: "נותר לבזבוז:",
@@ -75,7 +75,7 @@ const translations = {
         new_cat_title: "קטגוריה חדשה", cat_name_ph: "שם", icon_label: "סמל:", icon_ph: "או הקלד...", cat_limit_ph: "תקציב",
         edit_budget_title: "עדכון תקציב", update: "עדכן",
         premium_title: "Premium", premium_title_header: "Premium", upgrade_pro: "שדרוג לפרו", pro_desc: "הסרת פרסומות, גיבוי בענן ותמיכה.", coming_soon: "בקרוב",
-        footer_rights: "© All rights reserved for Neto App , Developer: Cohen's.",
+        footer_rights: "© All rights reserved for Neto App",
         tips: ["הדרך לעושר מתחילה בשקל הראשון שחוסכים.", "לא משנה כמה אתה מרוויח, משנה כמה אתה שומר.", "תקציב הוא לא כלא, הוא המפתח לחופש.", "כסף הוא משרת נהדר אבל אדון נורא.", "השקעה בעצמך מניבה את הריבית הגבוהה ביותר.", "הוצאות קטנות מצטברות להון גדול.", "שליטה בכסף היא שליטה בחיים.", "העושר האמיתי הוא השקט הנפשי.", "אל תקנה מה שאתה לא צריך.", "תקציב חכם היום = חופש כלכלי מחר."],
         pin_enter: "הזן קוד גישה", pin_setup: "בחר קוד גישה חדש", pin_confirm: "אמת קוד גישה", pin_wrong: "קוד שגוי", pin_match_err: "קוד לא תואם",
         converter_title: "ממיר מטבעות", convert_btn: "המר כעת",
@@ -87,7 +87,7 @@ const translations = {
         timer_earned: "רווח מצטבר", timer_start: "כניסה למשמרת", timer_stop: "יציאה"
     },
     en: {
-        dir: 'ltr', locale: 'en-US', remove_pin: "Remove PIN Lock",
+        dir: 'ltr', locale: 'en-US', remove_pin: "Remove PIN Lock", menu_logout: "Logout",
         app_title: "Neto", subtitle: "Smart Budget Management", daily_tip: "Daily Tip", start_btn: "Let's Start",
         menu_title: "Menu", menu_home: "Dashboard", menu_timer: "Shift Clock", menu_converter: "Currency Converter", menu_recur: "Recurring Expenses", menu_calc: "Salary Calc", menu_loan: "Loan Calc", menu_split: "Split Bill", menu_wishlist: "Wishlist", menu_pro: "Premium", menu_backup: "Backup & Restore", menu_dark: "Dark Mode", setup_pin: "Setup PIN Lock",
         balance_label: "Bank Balance", salary_label: "Salary", filter_all: "All Categories", search_ph: "Search expenses...", left_to_spend: "Left to Spend:",
@@ -261,15 +261,9 @@ function renderApp() {
         let colorClass = percent > 100 ? 'bg-red' : (percent > 75 ? 'bg-yellow' : 'bg-green'); let balanceStyle = percent >= 100 ? 'color:var(--danger)' : '';
 
         const card = document.createElement('div'); card.className = 'category-card animate-item'; card.setAttribute('data-id', cat.id); 
-        const deleteBtnHtml = `<div class="cat-delete-main-btn" onclick="deleteCategoryMain(${cat.id})"><i class="fas fa-times"></i></div>`;
-        const dragHandleHtml = `<div class="drag-handle"><i class="fas fa-sort"></i></div>`;
-
         card.innerHTML = `
-            ${deleteBtnHtml} ${dragHandleHtml}
-            <div class="card-header">
-                <div class="cat-info"><div class="cat-emoji">${cat.emoji}</div><div><div style="font-weight:bold">${cat.name}</div><div class="cat-limit" onclick="openLimitModal(${cat.id})">${t('budget')} ${limit} <i class="fas fa-pen" style="font-size:0.7rem"></i></div></div></div>
-                <div class="current-spend" style="${balanceStyle}">${formatMoney(catTotal)}</div>
-            </div>
+            <div class="cat-delete-main-btn" onclick="deleteCategoryMain(${cat.id})"><i class="fas fa-times"></i></div><div class="drag-handle"><i class="fas fa-sort"></i></div>
+            <div class="card-header"><div class="cat-info"><div class="cat-emoji">${cat.emoji}</div><div><div style="font-weight:bold">${cat.name}</div><div class="cat-limit" onclick="openLimitModal(${cat.id})">${t('budget')} ${limit} <i class="fas fa-pen" style="font-size:0.7rem"></i></div></div></div><div class="current-spend" style="${balanceStyle}">${formatMoney(catTotal)}</div></div>
             <div class="progress-track"><div class="progress-fill ${colorClass}" style="width:${percent}%"></div></div>
             <ul class="items-list">${filteredItems.map(item => {
                 let icon = item.method === 'cash' ? '<i class="fas fa-money-bill-wave pay-method-icon"></i>' : (item.method === 'transfer' ? '<i class="fas fa-university pay-method-icon"></i>' : '<i class="fas fa-credit-card pay-method-icon"></i>');
@@ -317,7 +311,13 @@ function checkPinLock() {
 function setupPinCode() { toggleMenu(); pinSetupMode = true; tempPin = ""; pinInput = ""; document.getElementById('pin-lock-screen').classList.add('active'); document.getElementById('pin-title').innerText = t('pin_setup'); document.getElementById('pin-cancel-btn').style.display = 'block'; updatePinDots(); }
 function removePinCode() { if (!localStorage.getItem('appPin')) { showAppAlert(t('alert_title'), 'לא מוגדר קוד נעילה', '⚠️'); toggleMenu(); return; } showConfirmDialog("הסרת נעילה", "האם אתה בטוח שברצונך להסיר את קוד הנעילה?", function() { localStorage.removeItem('appPin'); pinCode = null; toggleMenu(); showAppAlert(t('alert_title'), 'קוד הנעילה הוסר בהצלחה', '🔓'); }); }
 function cancelPinSetup() { pinSetupMode = false; tempPin = ""; pinInput = ""; document.getElementById('pin-lock-screen').classList.remove('active'); }
-let pinInput = ""; let pinSetupMode = false; let tempPin = "";
+function logoutApp() {
+    if(document.getElementById('side-menu').classList.contains('open')) toggleMenu();
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.getElementById('page-landing').classList.add('active');
+    triggerHaptic();
+}
+
 function pressPin(num) { triggerHaptic(); if(pinInput.length < 4) { pinInput += num; updatePinDots(); if(pinInput.length === 4) setTimeout(handlePinSubmit, 200); } }
 function deletePin() { triggerHaptic(); pinInput = pinInput.slice(0, -1); updatePinDots(); }
 function updatePinDots() { const dots = document.querySelectorAll('.pin-dot'); dots.forEach((dot, i) => { if(i < pinInput.length) dot.classList.add('filled'); else dot.classList.remove('filled'); dot.classList.remove('error'); }); }
@@ -510,7 +510,6 @@ function openLimitModal(catId) { const cat = appData.categories.find(c => c.id =
 function confirmEditLimit() { const catId = parseInt(document.getElementById('edit-cat-id').value); const newLimit = parseFloat(document.getElementById('edit-cat-limit').value); const cat = appData.categories.find(c => c.id === catId); if(cat && newLimit) { cat.limit = newLimit; saveAndRender(); document.getElementById('limit-modal').classList.remove('open'); } }
 function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
 function checkPremiumStatus() { if(appData.isPremium) { document.querySelectorAll('.ad-spacer').forEach(e=>e.style.display='none'); document.body.style.paddingBottom="80px"; } }
-
 function toggleRecType() { const isInstall = document.getElementById('type-installments').checked; document.getElementById('rec-payments-container').style.display = isInstall ? 'block' : 'none'; }
 function renderRecurringPage() { const container = document.getElementById('recurring-list-container'); container.innerHTML = ''; const select = document.getElementById('rec-cat-select'); if(select) select.innerHTML = appData.categories.map(c => `<option value="${c.id}">${c.emoji} ${c.name}</option>`).join(''); if (!appData.recurringSettings || appData.recurringSettings.length === 0) { container.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px; color:#999;">${t('no_recur')}</td></tr>`; return; } appData.recurringSettings.forEach((rec, index) => { const cat = appData.categories.find(c => c.id == rec.catId); const catName = cat ? (cat.emoji + ' ' + cat.name) : '-'; let nameDisplay = rec.text; if(rec.type === 'installments') { let currentNum = rec.totalPayments - rec.remaining; if(currentNum < 1) currentNum = 1; nameDisplay += ` <small style="color:var(--primary)">(${currentNum}/${rec.totalPayments})</small>`; } else { nameDisplay += ` <small style="opacity:0.5">(∞)</small>`; } const tr = document.createElement('tr'); tr.innerHTML = `<td style="font-weight:bold;">${nameDisplay}</td><td style="color:var(--text-sec); font-size:0.85rem;">${catName}</td><td style="text-align:center; direction:ltr;">${formatMoney(rec.amount)}</td><td style="text-align:center;"><button onclick="deleteRecurring(${index})" style="background:rgba(255, 118, 117, 0.1); color:var(--danger); border:none; width:30px; height:30px; border-radius:50%; cursor:pointer;"><i class="fas fa-trash-alt"></i></button></td>`; container.appendChild(tr); }); }
 function addRecurringSetting() { triggerHaptic(); const text = document.getElementById('rec-desc').value; const amount = parseFloat(document.getElementById('rec-amount').value); const catId = document.getElementById('rec-cat-select').value; const isInstallments = document.getElementById('type-installments').checked; const payments = parseInt(document.getElementById('rec-payments').value) || 1; if(!text || !amount) return; const uniqueRecurId = Date.now() + Math.random(); const setting = { id: uniqueRecurId, text, amount, catId, type: isInstallments ? 'installments' : 'fixed', totalPayments: isInstallments ? payments : 0, remaining: isInstallments ? payments : 0 }; appData.recurringSettings.push(setting); const cat = appData.categories.find(c => c.id == catId); if(cat) { let itemText = text + ' (Auto)'; if(isInstallments) { itemText = `${text} (1/${payments})`; setting.remaining--; } cat.items.push({ id: Date.now().toString(), text: itemText, amount: -Math.abs(amount), date: currentDate.toISOString(), isAuto: true, method: 'credit', fromRecurId: uniqueRecurId }); if(isInstallments && setting.remaining <= 0) { appData.recurringSettings = appData.recurringSettings.filter(r => r.id !== uniqueRecurId); } } saveAndRender(); document.getElementById('rec-desc').value = ''; document.getElementById('rec-amount').value = ''; document.getElementById('rec-payments').value = ''; renderRecurringPage(); showAppAlert(t('alert_title'), 'Synced', '✅'); }
@@ -558,16 +557,13 @@ function initSalaryCalculator() {
     $('#ssc_saveTemplateBtn').onclick=()=>{ const name=$('#ssc_newShiftName').value.trim(); const slices=[]; document.querySelectorAll('#ssc_newShiftSlices .ssc-editor-slice').forEach(div=>{ slices.push({p:+div.querySelector('.e-p').value, h:+div.querySelector('.e-h').value}); }); if(name && slices.length){ state.categories.push({id:'g'+Date.now(),name,slices}); saveData(); renderAll(); $('#ssc_newShiftName').value=''; $('#ssc_newShiftSlices').innerHTML=''; window.sscAddEditorSlice(); } };
 }
 
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.id === 'ssc_secretBtn') {
-                const input = document.getElementById('ssc_secretCode');
-                if (!input) return;
-                const val = input.value.trim();
-                if (val === 'משמר') { localStorage.setItem('ssc:mode', 'mishmar'); showAppAlert('מצב משמר', 'הפרופיל נטען בהצלחה! מרענן...', '👮‍♂️', function() { location.reload(); }); } 
-                else if (val === 'רגיל' || val === 'generic') { localStorage.setItem('ssc:mode', 'generic'); showAppAlert('מצב רגיל', 'חזרת למצב עריכה חופשי.', '✏️', function() { location.reload(); }); } 
-                else { showAppAlert('שגיאה', 'קוד לא חוקי', '❌'); }
-            }
-        });
-    </script>
-</body>
-</html>
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'ssc_secretBtn') {
+        const input = document.getElementById('ssc_secretCode');
+        if (!input) return;
+        const val = input.value.trim();
+        if (val === 'משמר') { localStorage.setItem('ssc:mode', 'mishmar'); showAppAlert('מצב משמר', 'הפרופיל נטען בהצלחה! מרענן...', '👮‍♂️', function() { location.reload(); }); } 
+        else if (val === 'רגיל' || val === 'generic') { localStorage.setItem('ssc:mode', 'generic'); showAppAlert('מצב רגיל', 'חזרת למצב עריכה חופשי.', '✏️', function() { location.reload(); }); } 
+        else { showAppAlert('שגיאה', 'קוד לא חוקי', '❌'); }
+    }
+});
