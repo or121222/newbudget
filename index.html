@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<script>
-    window.onerror = function(message, source, lineno, colno, error) {
-        alert("שגיאה באפליקציה:\n" + message + "\nשורה: " + lineno);
-    };
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Neto</title>
@@ -67,10 +62,10 @@
     <div id="side-menu" class="side-menu">
         <h2 style="color:var(--primary); padding:0 20px;" data-lang="menu_title">תפריט</h2>
         <div class="menu-item active" onclick="navTo('dashboard')"><i class="fas fa-home"></i> <span data-lang="menu_home">ראשי</span></div>
-        <div class="menu-item" onclick="navTo('timer')"><i class="fas fa-stopwatch"></i> <span data-lang="menu_timer">שעון נוכחות</span></div>
         <div class="menu-item" onclick="navTo('recurring')"><i class="fas fa-sync-alt"></i> <span data-lang="menu_recur">הוצאות קבועות</span></div>
-        <div class="menu-item" onclick="navTo('converter')"><i class="fas fa-exchange-alt"></i> <span data-lang="menu_converter">ממיר מטבעות</span></div>
+        <div class="menu-item" onclick="navTo('timer')"><i class="fas fa-stopwatch"></i> <span data-lang="menu_timer">שעון נוכחות</span></div>
         <div class="menu-item" onclick="navTo('calc')"><i class="fas fa-calculator"></i> <span data-lang="menu_calc">מחשבון שכר</span></div>
+        <div class="menu-item" onclick="navTo('converter')"><i class="fas fa-exchange-alt"></i> <span data-lang="menu_converter">ממיר מטבעות</span></div>
         <div class="menu-item" onclick="navTo('loan')"><i class="fas fa-hand-holding-usd"></i> <span data-lang="menu_loan">מחשבון הלוואה</span></div>
         <div class="menu-item" onclick="navTo('split')"><i class="fas fa-utensils"></i> <span data-lang="menu_split">פיצול חשבון</span></div>
         <div class="menu-item" onclick="navTo('wishlist')"><i class="fas fa-gift"></i> <span data-lang="menu_wishlist">משאלות</span></div>
@@ -78,10 +73,11 @@
         
         <div class="menu-divider" style="height:1px;background:rgba(0,0,0,0.1);margin:5px 0;"></div>
         
-        <div class="menu-item" onclick="openSettingsModal()"><i class="fas fa-cog"></i> <span data-lang="menu_backup">גיבוי והגדרות</span></div>
+        <div class="menu-item" onclick="openSettingsModal()"><i class="fas fa-cog"></i> <span data-lang="menu_backup">הגדרות</span></div>
         <div class="menu-item" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> <span data-lang="menu_dark">מצב לילה</span></div>
         <div class="menu-item" onclick="setupPinCode()"><i class="fas fa-lock"></i> <span data-lang="setup_pin">הגדרת קוד נעילה</span></div>
         <div class="menu-item" onclick="removePinCode()"><i class="fas fa-unlock"></i> <span data-lang="remove_pin">הסר קוד נעילה</span></div>
+        <div class="menu-item" onclick="logoutApp()"><i class="fas fa-sign-out-alt"></i> <span data-lang="menu_logout">יציאה</span></div>
         
         <div class="menu-divider" style="height:1px;background:rgba(0,0,0,0.1);margin:5px 0;"></div>
         
@@ -163,15 +159,19 @@
                 <i class="fas fa-play"></i>
             </button>
             <div id="timer-status-text" style="margin-top:15px; opacity:0.7; font-size:0.9rem;"></div>
+            
+            <div id="shift-save-area" style="display:none; margin-top:20px; width:90%; max-width:300px; background:var(--card-bg); padding:15px; border-radius:15px; box-shadow:var(--shadow);">
+                <div style="font-weight:bold; margin-bottom:10px;">סיום משמרת</div>
+                <select id="shift-type-select" class="qa-input" style="width:100%; margin-bottom:10px;"></select>
+                <button class="btn-primary" onclick="saveShift()" style="margin-bottom:5px;">שמור</button>
+                <button class="btn-primary" style="background:#ccc; color:#333;" onclick="cancelShiftSave()">ביטול</button>
+            </div>
         </div>
         <div class="ad-spacer"></div>
     </div>
 
     <div id="page-converter" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="menu_converter">ממיר מטבעות</h2>
-        </header>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="menu_converter">ממיר מטבעות</h2></header>
         <div class="converter-box">
             <div><div class="conv-label" data-lang="amount_placeholder">סכום</div><input type="number" id="conv-amount" class="conv-input" value="1" placeholder="1" oninput="convertCurrency()"></div>
             <div><div class="conv-label">ממטבע / From</div><select id="conv-from" class="conv-select" onchange="convertCurrency()"></select></div>
@@ -184,16 +184,10 @@
     </div>
 
     <div id="page-recurring" class="page">
-        <header class="app-header" style="padding-bottom: 20px;">
-            <div style="height:20px"></div>
-            <h2 data-lang="recur_title">הוצאות קבועות</h2>
-        </header>
+        <header class="app-header" style="padding-bottom: 20px;"><div style="height:20px"></div><h2 data-lang="recur_title">הוצאות קבועות</h2></header>
         <div class="recur-add-box">
             <h3 style="margin-top:0; color:var(--primary); margin-bottom:15px;" data-lang="add_new">+ הוספה חדשה</h3>
-            <div class="rec-type-selector">
-                <label class="rec-type-label"><input type="radio" name="recType" id="type-fixed" value="fixed" checked onchange="toggleRecType()"><span data-lang="type_fixed">הוראת קבע</span></label>
-                <label class="rec-type-label"><input type="radio" name="recType" id="type-installments" value="installments" onchange="toggleRecType()"><span data-lang="type_installments">תשלומים</span></label>
-            </div>
+            <div class="rec-type-selector"><label class="rec-type-label"><input type="radio" name="recType" id="type-fixed" value="fixed" checked onchange="toggleRecType()"><span data-lang="type_fixed">הוראת קבע</span></label><label class="rec-type-label"><input type="radio" name="recType" id="type-installments" value="installments" onchange="toggleRecType()"><span data-lang="type_installments">תשלומים</span></label></div>
             <div style="display:flex; gap:5px;"><input type="text" id="rec-desc" class="qa-input" style="flex:2; min-width:0;" data-lang-placeholder="recur_name_ph" placeholder="שם"><input type="number" id="rec-amount" class="qa-input" style="flex:1; min-width:0;" data-lang-placeholder="amount_placeholder" placeholder="סכום"></div>
             <div id="rec-payments-container" style="display:none; margin-top:10px;"><input type="number" id="rec-payments" class="qa-input" style="width:100%;" data-lang-placeholder="num_payments" placeholder="מספר תשלומים"></div>
             <select id="rec-cat-select" class="qa-input" style="width:100%; margin-top:10px; margin-bottom:10px;"></select>
